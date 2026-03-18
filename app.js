@@ -27,6 +27,7 @@ const state = {
   splitMinutes: 15,
   specificPhrases: [],
   selectedTechniques: [],
+  inviteCode: "",
   driveUrl: "",
   folderId: "",
   resultFolderId: "",
@@ -296,6 +297,7 @@ function fillStateFromForm() {
     document.getElementById("specificPhrases").value
   );
   state.selectedTechniques = collectSelectedTechniques();
+  state.inviteCode = document.getElementById("inviteCode").value.trim();
 }
 
 async function createApplication(payload) {
@@ -372,10 +374,10 @@ async function handleApplicationSubmit() {
   clearMessage();
   fillStateFromForm();
 
-  if (!state.email || !state.gender || !state.splitMinutes) {
-    showMessage("メールアドレス、依頼者の性別、分割単位は必須です。", "error");
-    return;
-  }
+  if (!state.email || !state.gender || !state.splitMinutes || !state.inviteCode) {
+  showMessage("メールアドレス、依頼者の性別、分割単位、招待コードは必須です。", "error");
+  return;
+}
 
   applicationSubmitButton.disabled = true;
   applicationSubmitButton.textContent = "専用アップロード先を作成しています...";
@@ -390,7 +392,8 @@ async function handleApplicationSubmit() {
       split_minutes: state.splitMinutes,
       specific_phrases: state.specificPhrases,
       selected_techniques: state.selectedTechniques,
-      analysis_mode: state.analysisMode
+      analysis_mode: state.analysisMode,
+      invite_code: state.inviteCode
     };
 
     const result = await createApplication(payload);
@@ -489,6 +492,7 @@ async function handleStartAnalysis() {
       split_minutes: state.splitMinutes,
       specific_phrases: state.specificPhrases,
       selected_techniques: state.selectedTechniques,
+      invite_code: state.inviteCode,
       folder_id: state.folderId,
       drive_url: state.driveUrl,
       result_folder_id: state.resultFolderId,
@@ -556,6 +560,7 @@ function restartFlow() {
     splitMinutes: 15,
     specificPhrases: [],
     selectedTechniques: [],
+    inviteCode: "",
     driveUrl: "",
     folderId: "",
     resultFolderId: "",
