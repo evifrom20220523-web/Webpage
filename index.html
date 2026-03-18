@@ -1,0 +1,2171 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ALIS | 音声解析サービス</title>
+  <style>
+    :root {
+      --bg: #f7f8fc;
+      --card: #ffffff;
+      --text: #18212f;
+      --muted: #5f6b7a;
+      --line: #dde3ec;
+      --accent: #2457ff;
+      --accent-soft: #eef3ff;
+      --danger: #a12626;
+      --danger-soft: #fff3f3;
+      --ok: #1f6b45;
+      --ok-soft: #eefaf3;
+      --warn: #7a5a12;
+      --warn-soft: #fff9ef;
+      --shadow: 0 14px 40px rgba(17, 24, 39, 0.08);
+      --radius: 22px;
+      --bottom-bar-height: 92px;
+      --focus-ring: 0 0 0 4px rgba(36, 87, 255, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Yu Gothic", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #f5f8ff 0%, #f8fafc 100%);
+      line-height: 1.7;
+    }
+
+    body.with-bottom-bar {
+      padding-bottom: calc(var(--bottom-bar-height) + 28px);
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 24px 0 12px;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--accent), #7aa2ff);
+      color: white;
+      box-shadow: var(--shadow);
+      font-weight: 800;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .cta,
+    .button-secondary,
+    .button-tertiary,
+    .drive-link,
+    .big-drive-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+    }
+
+    .cta {
+      background: var(--accent);
+      color: white !important;
+      border: none;
+      box-shadow: 0 12px 24px rgba(36, 87, 255, 0.2);
+    }
+
+    .button-secondary {
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: white;
+    }
+
+    .button-tertiary {
+      border: 1px solid #cfd8ea;
+      color: var(--accent);
+      background: #f8fbff;
+    }
+
+    .big-drive-button {
+      width: 100%;
+      min-height: 56px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      box-shadow: 0 12px 24px rgba(36, 87, 255, 0.18);
+      font-size: 16px;
+    }
+
+    .cta:hover:not(:disabled),
+    .button-secondary:hover:not(:disabled),
+    .button-tertiary:hover:not(:disabled),
+    .drive-link:hover:not(.empty-link),
+    .big-drive-button:hover:not(.empty-link) {
+      transform: translateY(-1px);
+    }
+
+    .cta:disabled,
+    .button-secondary:disabled,
+    .button-tertiary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .cta:focus-visible,
+    .button-secondary:focus-visible,
+    .button-tertiary:focus-visible,
+    .big-drive-button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible,
+    .mode-card:focus-visible,
+    .drive-link:focus-visible,
+    summary:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring);
+    }
+
+    .hero {
+      padding: 42px 0 32px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .hero-copy,
+    .hero-card,
+    .section-card,
+    .policy-card,
+    .wizard-wrap,
+    .status-chip,
+    .summary-card,
+    .floating-message,
+    .step-callout,
+    .confirm-box,
+    .details-card,
+    .focus-card,
+    .micro-step-card,
+    .account-box,
+    .priority-box,
+    .next-action-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy {
+      padding: 34px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1.1;
+      margin: 0 0 18px;
+      letter-spacing: -0.03em;
+    }
+
+    .lead {
+      font-size: 17px;
+      color: var(--muted);
+      margin: 0 0 24px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .mini-points {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .mini-point {
+      padding: 14px;
+      border-radius: 18px;
+      background: #f9fbff;
+      border: 1px solid #e9eef8;
+    }
+
+    .mini-point strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .mini-point span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .hero-card {
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .hero-card h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .status-box {
+      padding: 16px;
+      border-radius: 18px;
+      background: #fafcff;
+      border: 1px solid #e8edf8;
+    }
+
+    .status-box strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    .status-box p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    main section {
+      padding: 22px 0;
+    }
+
+    .section-head {
+      margin-bottom: 16px;
+    }
+
+    .section-head h2 {
+      margin: 0 0 8px;
+      font-size: 30px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .section-card {
+      padding: 24px;
+    }
+
+    .section-card h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    .section-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .step {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .step-no {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .step h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .wizard-wrap {
+      position: relative;
+      padding: 20px;
+    }
+
+    .wizard-progress {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .status-chip {
+      padding: 14px 16px;
+      border-radius: 18px;
+      box-shadow: none;
+      background: #f8fbff;
+    }
+
+    .status-chip small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .status-chip strong {
+      display: block;
+      font-size: 15px;
+    }
+
+    .status-chip.active {
+      border-color: #cdd9ff;
+      background: var(--accent-soft);
+    }
+
+    .status-chip.done {
+      border-color: #caedd7;
+      background: #f0fbf5;
+    }
+
+    .wizard-note {
+      background: var(--warn-soft);
+      border: 1px solid #f0dfba;
+      color: #664700;
+      padding: 14px 16px;
+      border-radius: 16px;
+      margin-bottom: 18px;
+      font-size: 14px;
+    }
+
+    .floating-message {
+      position: sticky;
+      top: 16px;
+      z-index: 20;
+      margin-bottom: 16px;
+      display: none;
+      padding: 16px 18px;
+      border-radius: 18px;
+      box-shadow: 0 10px 26px rgba(17, 24, 39, 0.08);
+    }
+
+    .floating-message.show { display: block; }
+    .floating-message.info {
+      background: #f7faff;
+      border-color: #dbe7ff;
+      color: #1741a8;
+    }
+    .floating-message.success {
+      background: var(--ok-soft);
+      border-color: #caedd7;
+      color: var(--ok);
+    }
+    .floating-message.error {
+      background: var(--danger-soft);
+      border-color: #f0c9c9;
+      color: var(--danger);
+    }
+
+    .wizard-panel {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 24px;
+      background: #fcfdff;
+      min-height: 420px;
+    }
+
+    .wizard-panel[hidden] {
+      display: none !important;
+    }
+
+    .wizard-panel h3 {
+      margin: 0 0 8px;
+      font-size: 24px;
+    }
+
+    .wizard-panel > p {
+      margin: 0 0 18px;
+      color: var(--muted);
+    }
+
+    .step-callout {
+      padding: 18px 20px;
+      margin-bottom: 18px;
+      background: linear-gradient(180deg, #f7faff 0%, #ffffff 100%);
+      border-color: #dce7ff;
+      box-shadow: none;
+    }
+
+    .step-callout strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 16px;
+      color: var(--text);
+    }
+
+    .step-callout p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .next-action-card {
+      padding: 20px;
+      margin-bottom: 18px;
+      background: linear-gradient(180deg, #2457ff 0%, #3d6cff 100%);
+      color: white;
+      border: none;
+    }
+
+    .next-action-card strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .next-action-card p {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.95;
+    }
+
+    .priority-box {
+      padding: 18px;
+      margin-bottom: 18px;
+      border-radius: 18px;
+      background: #fffef9;
+      border: 1px solid #eadfb0;
+      box-shadow: none;
+    }
+
+    .priority-box strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .micro-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .micro-step-card {
+      padding: 16px;
+      box-shadow: none;
+      background: #fafcff;
+      border-radius: 18px;
+    }
+
+    .micro-step-number {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 800;
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+
+    .micro-step-card strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .micro-step-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 13px 14px;
+      font: inherit;
+      background: white;
+      color: var(--text);
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: 2px solid rgba(36, 87, 255, 0.12);
+      border-color: #bfcfff;
+    }
+
+    .field-help {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: -2px;
+    }
+
+    .mode-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .mode-card {
+      position: relative;
+      display: block;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      background: white;
+      cursor: pointer;
+      transition: border-color 0.12s ease, background 0.12s ease, transform 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    .mode-card:hover {
+      transform: translateY(-1px);
+      border-color: #c8d7ff;
+    }
+
+    .mode-card input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .mode-card.selected {
+      border-color: #b8cbff;
+      background: #f6f9ff;
+      box-shadow: 0 0 0 1px #d8e3ff inset;
+    }
+
+    .mode-card strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+
+    .mode-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .mode-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #eef4ff;
+      color: var(--accent);
+    }
+
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: white;
+    }
+
+    .checkbox-item input {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      flex: 0 0 auto;
+    }
+
+    .checkbox-item span {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .summary-card {
+      padding: 18px;
+      box-shadow: none;
+      background: #ffffff;
+    }
+
+    .summary-card h4 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .summary-list {
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .summary-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed #e6ebf4;
+    }
+
+    .summary-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .summary-key {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .summary-value {
+      font-size: 14px;
+      word-break: break-word;
+    }
+
+    .drive-box {
+      padding: 20px;
+      border-radius: 18px;
+      background: #f8fbff;
+      border: 1px solid #dfebff;
+      margin-bottom: 16px;
+    }
+
+    .drive-box strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .drive-link {
+      background: white;
+      border: 1px solid var(--line);
+      color: var(--accent);
+      word-break: break-all;
+      width: auto;
+    }
+
+    .help-text {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    .inline-code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      background: #f4f6fb;
+      border: 1px solid #e4e9f2;
+      border-radius: 10px;
+      padding: 2px 6px;
+      font-size: 13px;
+    }
+
+    .panel-meta {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 16px;
+      align-items: start;
+      margin-bottom: 18px;
+    }
+
+    .quick-guide {
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid #e7edf9;
+      background: #fbfcff;
+    }
+
+    .quick-guide h4 {
+      margin: 0 0 10px;
+      font-size: 17px;
+    }
+
+    .quick-guide ol,
+    .quick-guide ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .quick-guide li + li {
+      margin-top: 8px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #f2f6ff;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid #d9e4ff;
+    }
+
+    .pill.warn {
+      background: #fff5f0;
+      color: #b65a1a;
+      border-color: #f3d6bf;
+    }
+
+    .empty-link {
+      pointer-events: none;
+      opacity: 0.55;
+    }
+
+    .compact-summary {
+      display: grid;
+      gap: 10px;
+    }
+
+    .compact-summary .summary-row {
+      grid-template-columns: 130px 1fr;
+    }
+
+    .details-card {
+      padding: 0;
+      box-shadow: none;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .details-card details {
+      padding: 0;
+    }
+
+    .details-card summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 16px 18px;
+      font-weight: 700;
+      user-select: none;
+      background: #fafcff;
+      border-bottom: 1px solid #edf2fa;
+    }
+
+    .details-card summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .details-content {
+      padding: 16px 18px;
+    }
+
+    .confirm-box {
+      padding: 16px 18px;
+      margin-top: 16px;
+      box-shadow: none;
+      border-radius: 18px;
+      background: #fffef9;
+      border-color: #eadfb0;
+    }
+
+    .confirm-inline {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .confirm-inline input {
+      width: 18px;
+      height: 18px;
+      margin-top: 4px;
+      flex: 0 0 auto;
+    }
+
+    .confirm-inline label {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.6;
+      cursor: pointer;
+    }
+
+    .tiny-link {
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .policy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .policy-card {
+      padding: 24px;
+    }
+
+    .policy-card h3 {
+      margin: 0 0 12px;
+      font-size: 20px;
+    }
+
+    .policy-card p,
+    .policy-card li {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .policy-card ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .account-box {
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid #f0dfba;
+      background: #fffaf0;
+      box-shadow: none;
+      margin-bottom: 18px;
+    }
+
+    .account-box strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 16px;
+      color: #6a4807;
+    }
+
+    .account-box p {
+      margin: 0;
+      color: #7a5a12;
+      font-size: 14px;
+    }
+
+    .note-emphasis {
+      font-weight: 800;
+    }
+
+    .action-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 40;
+      background: rgba(247, 249, 253, 0.86);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(221, 227, 236, 0.9);
+      display: none;
+    }
+
+    .action-bar.show {
+      display: block;
+    }
+
+    .action-bar-inner {
+      width: min(1120px, calc(100% - 32px));
+      min-height: var(--bottom-bar-height);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 14px 0;
+    }
+
+    .action-bar-left,
+    .action-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .action-status {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    footer {
+      padding: 28px 0 48px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-box {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--line);
+      padding-top: 18px;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .grid-3,
+      .steps,
+      .policy-grid,
+      .mini-points,
+      .wizard-progress,
+      .form-grid,
+      .checkbox-grid,
+      .summary-row,
+      .mode-grid,
+      .panel-meta,
+      .compact-summary .summary-row,
+      .micro-steps {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      header {
+        padding-bottom: 8px;
+      }
+
+      .nav {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .nav-links {
+        justify-content: space-between;
+      }
+
+      .action-bar-inner {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .action-bar-left,
+      .action-bar-right {
+        width: 100%;
+      }
+
+      .action-bar-right > button,
+      .action-bar-left > button {
+        flex: 1 1 auto;
+      }
+
+      body.with-bottom-bar {
+        padding-bottom: 148px;
+      }
+
+      .wizard-panel {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+<body class="with-bottom-bar">
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#top">
+        <span class="brand-mark">A</span>
+        <span>ALIS</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#features">特徴</a>
+        <a href="#flow">流れ</a>
+        <a href="#apply">申込</a>
+        <a href="#policy">ご利用前に</a>
+        <a class="cta" href="#apply">開始する</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">音声証拠の整理を、索引レポートで見やすく</div>
+          <h1>ALIS 音声解析サービス</h1>
+          <p class="lead">
+            録音データを区間ごとに解析し、重要箇所を見つけやすい索引レポートとして整理します。
+            原本ハッシュ、解析ログ、区間別ヒット情報を保持し、あとで再確認しやすい形に整えます。
+          </p>
+          <div class="hero-actions">
+            <a class="cta" href="#apply">申込を開始</a>
+            <a class="button-secondary" href="#policy">利用条件を見る</a>
+          </div>
+          <div class="mini-points">
+            <div class="mini-point">
+              <strong>区間索引</strong>
+              <span>Part単位で重要箇所を再生しやすく整理。</span>
+            </div>
+            <div class="mini-point">
+              <strong>真正性管理</strong>
+              <span>SHA256 とログで原本との対応を保持。</span>
+            </div>
+            <div class="mini-point">
+              <strong>迷いにくい導線</strong>
+              <span>入力、アップロード、開始の順で進行。</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <div>
+            <h2>このページでやること</h2>
+          </div>
+          <div class="status-box">
+            <strong>1. 申込情報を入力</strong>
+            <p>案件名、依頼者情報、分析方法、注視ポイントを入力します。</p>
+          </div>
+          <div class="status-box">
+            <strong>2. Google Driveに音声をアップロード</strong>
+            <p>申込後、このページに専用アップロード先が表示されます。</p>
+          </div>
+          <div class="status-box">
+            <strong>3. このページで分析開始</strong>
+            <p>アップロード後に分析開始ボタンを押し、結果はメールで受け取ります。</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="container">
+        <div class="section-head">
+          <h2>ALIS の特徴</h2>
+          <p>最初はシンプルに、あとから拡張しやすい構成を想定しています。</p>
+        </div>
+        <div class="grid-3">
+          <article class="section-card">
+            <h3>重要箇所を見つけやすい</h3>
+            <p>証拠候補を Part 単位で整理し、区間分布やタイムラインとあわせて再生優先順位をつけやすくします。</p>
+          </article>
+          <article class="section-card">
+            <h3>ログを残せる</h3>
+            <p>RUNLOG や MANIFEST により、いつ・何を・どの設定で解析したかを後から確認できます。</p>
+          </article>
+          <article class="section-card">
+            <h3>案件にも単発にも対応</h3>
+            <p>複数音声をまとめる案件モードと、1音声だけを確認する簡易モードを使い分けられます。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="flow">
+      <div class="container">
+        <div class="section-head">
+          <h2>ご利用の流れ</h2>
+          <p>初めての方でも、やることが順番に分かる構成です。</p>
+        </div>
+        <div class="steps">
+          <article class="step">
+            <div class="step-no">1</div>
+            <h3>申込内容を入力</h3>
+            <p>案件名、依頼者情報、分析方法、注視ワード・フレーズなどを入力します。</p>
+          </article>
+          <article class="step">
+            <div class="step-no">2</div>
+            <h3>音声をアップロード</h3>
+            <p>作成された専用Google Driveフォルダに、解析対象の音声ファイルを入れます。</p>
+          </article>
+          <article class="step">
+            <div class="step-no">3</div>
+            <h3>分析を開始</h3>
+            <p>アップロード後、このページに戻って分析開始ボタンを押します。</p>
+          </article>
+          <article class="step">
+            <div class="step-no">4</div>
+            <h3>結果を受け取る</h3>
+            <p>解析完了後、結果をメールで受け取ります。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="apply">
+      <div class="container">
+        <div class="section-head">
+          <h2>申込・アップロード・分析開始</h2>
+          <p>この画面内で順番に進みます。Google Driveへのアップロードだけ新しいタブで開きます。</p>
+        </div>
+
+        <div class="wizard-wrap">
+          <div class="wizard-progress">
+            <div id="progress-step-1" class="status-chip active">
+              <small>Step 1</small>
+              <strong>申込内容を入力</strong>
+            </div>
+            <div id="progress-step-2" class="status-chip">
+              <small>Step 2</small>
+              <strong>音声をアップロード</strong>
+            </div>
+            <div id="progress-step-3" class="status-chip">
+              <small>Step 3</small>
+              <strong>分析を開始</strong>
+            </div>
+            <div id="progress-step-4" class="status-chip">
+              <small>Step 4</small>
+              <strong>受付完了・結果待ち</strong>
+            </div>
+          </div>
+
+          <div class="wizard-note">
+            実運用時は、下の JavaScript にある
+            <span class="inline-code">APPLICATION_WEBHOOK_URL</span> と
+            <span class="inline-code">START_ANALYSIS_WEBHOOK_URL</span>
+            を Make の Custom Webhook URL に差し替えてください。
+          </div>
+
+          <div id="globalMessage" class="floating-message info" aria-live="polite"></div>
+
+          <div id="panel-step-1" class="wizard-panel">
+            <div class="next-action-card">
+              <strong>いまやること：申込内容を入力してください</strong>
+              <p>入力が終わると、このページ上に専用Google Driveのアップロード先が表示されます。</p>
+            </div>
+
+            <div class="account-box">
+              <strong>事前にご確認ください</strong>
+              <p>
+                本サービスでは音声ファイルの受け渡しに Google Drive を使用します。<br />
+                ご利用には、Google Drive の共有を受け取れる Google アカウントが必要です。<br />
+                <span class="note-emphasis">Gmail アドレスである必要はありません。</span>
+              </p>
+            </div>
+
+            <h3>申込内容を入力する</h3>
+            <p>必須項目を入力し、専用アップロード先を作成してください。</p>
+
+            <form id="applicationForm">
+              <div class="form-grid">
+                <div class="form-field full">
+                  <label for="caseTitle">案件名</label>
+                  <input type="text" id="caseTitle" name="caseTitle" maxlength="100" placeholder="例：3月上旬の電話録音、面会交流の協議、退去要求に関する会話" />
+                  <div class="field-help">あとで識別しやすい名前を入力してください。未入力でも進められます。</div>
+                </div>
+
+                <div class="form-field full">
+                  <label>分析方法</label>
+                  <div class="mode-grid" id="analysisModeGrid">
+                    <label class="mode-card selected" data-mode="case_multi_file" tabindex="0">
+                      <input type="radio" name="analysisMode" value="case_multi_file" checked />
+                      <strong>案件モード（おすすめ）</strong>
+                      <p>1案件内で複数の音声ファイルをまとめて分析します。音声ごとの結果に加え、案件全体の確認優先箇所を整理します。</p>
+                      <span class="mode-badge">複数音声対応</span>
+                    </label>
+                    <label class="mode-card" data-mode="single_file_quick" tabindex="0">
+                      <input type="radio" name="analysisMode" value="single_file_quick" />
+                      <strong>単独ファイル簡易モード</strong>
+                      <p>1つの音声ファイルのみを対象に、簡易的に分析します。まず試したい場合や単発確認に向いています。</p>
+                      <span class="mode-badge">1音声のみ</span>
+                    </label>
+                  </div>
+                  <div class="field-help">案件モードでは複数ファイルをアップロードできます。単独ファイル簡易モードは1ファイルのみ対応です。</div>
+                </div>
+
+                <div class="form-field">
+                  <label for="clientEmail">メールアドレス</label>
+                  <input type="email" id="clientEmail" name="clientEmail" placeholder="example@example.com" required />
+                </div>
+
+                <div class="form-field">
+                  <label for="clientGender">依頼者の性別</label>
+                  <select id="clientGender" name="clientGender" required>
+                    <option value="">選択してください</option>
+                    <option value="男性">男性</option>
+                    <option value="女性">女性</option>
+                  </select>
+                </div>
+
+                <div class="form-field">
+                  <label for="splitMinutes">分割単位</label>
+                  <select id="splitMinutes" name="splitMinutes" required>
+                    <option value="15" selected>15分（標準）</option>
+                    <option value="10">10分（やや細かめ）</option>
+                    <option value="20">20分（長時間向け）</option>
+                    <option value="5">5分（詳細確認向け・解析件数増）</option>
+                    <option value="3">3分（高精度検証用・解析件数大幅増）</option>
+                  </select>
+                </div>
+
+                <div class="form-field full">
+                  <label for="specificPhrases">注視ワード・フレーズ</label>
+                  <textarea id="specificPhrases" name="specificPhrases" placeholder="例：&#10;無能&#10;出ていけ&#10;家族じゃない"></textarea>
+                  <div class="field-help">カンマ（,）、読点（、）、改行で複数入力できます。入力内容は配列にして送信されます。</div>
+                </div>
+
+                <div class="form-field full">
+                  <label>注視したい技法</label>
+                  <div class="checkbox-grid" id="techniqueGrid">
+                    <label class="checkbox-item"><input type="checkbox" name="technique" value="ガスライティング（記憶のねじ曲げ、「言ってない」と否定）"><span>ガスライティング（記憶のねじ曲げ、「言ってない」と否定）</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="technique" value="ダブルバインド（矛盾した命令、どう動いても責める）"><span>ダブルバインド（矛盾した命令、どう動いても責める）</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="technique" value="レッテル張り・人格否定（『ゴミ』『無能』等の人格否定、嘲笑）"><span>レッテル張り・人格否定（『ゴミ』『無能』等の人格否定、嘲笑）</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="technique" value="ゆすり・脅迫（関係ない事柄を盾に無理な要求をする）"><span>ゆすり・脅迫（関係ない事柄を盾に無理な要求をする）</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="technique" value="人間関係への攻撃（親族・友人への侮辱、孤立化・監視）"><span>人間関係への攻撃（親族・友人への侮辱、孤立化・監視）</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="technique" value="物理的な威嚇・破壊（物音、物を投げる）"><span>物理的な威嚇・破壊（物音、物を投げる）</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="technique" value="DARVO（非難されると逆上・逆襲する、被害者ぶる）"><span>DARVO（非難されると逆上・逆襲する、被害者ぶる）</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="technique" value="強迫的な追及（望む答えが出るまでしつこく同じ話を繰り返す）"><span>強迫的な追及（望む答えが出るまでしつこく同じ話を繰り返す）</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="technique" value="情緒的搾取（弱者や病気を盾に罪悪感を煽る）"><span>情緒的搾取（弱者や病気を盾に罪悪感を煽る）</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="technique" value="子供を利用した脅迫・支配（親権、面会を盾にする）"><span>子供を利用した脅迫・支配（親権、面会を盾にする）</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="technique" value="子供への攻撃（暴言、暴力、恐怖心を与える行為）"><span>子供への攻撃（暴言、暴力、恐怖心を与える行為）</span></label>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div id="panel-step-2" class="wizard-panel" hidden>
+            <div class="next-action-card">
+              <strong>いまやること：Google Drive に音声をアップロードしてください</strong>
+              <p>まずアップロード先を開き、音声を入れてください。アップロード後にこのページへ戻り、完了チェックを入れると次へ進めます。</p>
+            </div>
+
+            <div class="priority-box">
+              <strong>このStepでは、次の3つだけ行ってください</strong>
+              <div class="micro-steps">
+                <div class="micro-step-card">
+                  <div class="micro-step-number">1</div>
+                  <strong>Driveを開く</strong>
+                  <p>下のボタンから専用Google Driveを新しいタブで開きます。</p>
+                </div>
+                <div class="micro-step-card">
+                  <div class="micro-step-number">2</div>
+                  <strong>音声をアップロード</strong>
+                  <p id="microStepUploadText">解析したい音声ファイルをアップロードします。</p>
+                </div>
+                <div class="micro-step-card">
+                  <div class="micro-step-number">3</div>
+                  <strong>この画面に戻る</strong>
+                  <p>アップロード完了後にチェックを入れ、次へ進みます。</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="drive-box">
+              <strong>アップロード先</strong>
+              <a id="driveFolderLink" class="big-drive-button empty-link" href="#" target="_blank" rel="noopener noreferrer">Google Drive を開く</a>
+              <div id="modeUploadHelp" class="help-text"></div>
+            </div>
+
+            <div class="confirm-box" style="margin-top:0;">
+              <div class="confirm-inline">
+                <input type="checkbox" id="uploadDoneCheck" />
+                <label for="uploadDoneCheck">Google Drive への音声アップロードが完了したらチェックしてください。チェックすると次へ進めます。</label>
+              </div>
+            </div>
+
+            <div class="panel-meta" style="margin-top:18px;">
+              <div class="summary-card">
+                <h4>今回の申込内容（主要項目）</h4>
+                <div class="summary-list compact-summary">
+                  <div class="summary-row"><div class="summary-key">案件名</div><div id="summaryCaseTitle" class="summary-value"></div></div>
+                  <div class="summary-row"><div class="summary-key">案件ID</div><div id="summaryCaseId" class="summary-value"></div></div>
+                  <div class="summary-row"><div class="summary-key">分析方法</div><div id="summaryMode" class="summary-value"></div></div>
+                  <div class="summary-row"><div class="summary-key">メールアドレス</div><div id="summaryEmail" class="summary-value"></div></div>
+                </div>
+              </div>
+
+              <div class="quick-guide">
+                <h4>この画面のポイント</h4>
+                <ol id="step2GuideList"></ol>
+                <div class="pill-row">
+                  <span id="modePill" class="pill"></span>
+                  <span id="modeWarningPill" class="pill warn"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="details-card">
+              <details>
+                <summary>詳細設定を表示する</summary>
+                <div class="details-content">
+                  <div class="summary-list">
+                    <div class="summary-row"><div class="summary-key">依頼者の性別</div><div id="summaryGender" class="summary-value"></div></div>
+                    <div class="summary-row"><div class="summary-key">分割単位</div><div id="summarySplit" class="summary-value"></div></div>
+                    <div class="summary-row"><div class="summary-key">注視ワード・フレーズ</div><div id="summaryPhrases" class="summary-value"></div></div>
+                    <div class="summary-row"><div class="summary-key">注視技法</div><div id="summaryTechniques" class="summary-value"></div></div>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </div>
+
+          <div id="panel-step-3" class="wizard-panel" hidden>
+            <div class="next-action-card">
+              <strong>いまやること：アップロード済みなら分析を開始してください</strong>
+              <p>Make 側で raw フォルダ内の音声を確認してから分析を開始します。必要なら下のリンクからアップロード先を再確認できます。</p>
+            </div>
+
+            <div class="priority-box">
+              <strong>開始前の最終確認</strong>
+              <ul id="step3Checklist" style="margin:0;padding-left:20px;color:var(--muted);"></ul>
+            </div>
+
+            <div class="panel-meta">
+              <div class="summary-card">
+                <h4>分析開始対象</h4>
+                <div class="summary-list">
+                  <div class="summary-row"><div class="summary-key">案件名</div><div id="analysisCaseTitle" class="summary-value"></div></div>
+                  <div class="summary-row"><div class="summary-key">案件ID</div><div id="analysisCaseId" class="summary-value"></div></div>
+                  <div class="summary-row"><div class="summary-key">分析方法</div><div id="analysisMode" class="summary-value"></div></div>
+                  <div class="summary-row"><div class="summary-key">メールアドレス</div><div id="analysisEmail" class="summary-value"></div></div>
+                  <div class="summary-row"><div class="summary-key">アップロード先の再確認</div><div class="summary-value"><a id="analysisDriveLink" href="#" target="_blank" rel="noopener noreferrer" class="tiny-link empty-link">Google Drive を開く</a></div></div>
+                </div>
+              </div>
+
+              <div class="quick-guide">
+                <h4>押す前に確認</h4>
+                <ul>
+                  <li>アップロードが終わっていれば、そのまま分析を開始してください。</li>
+                  <li>結果は完了後にメールで送信されます。</li>
+                  <li>開始後は Step4 に進みます。</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div id="panel-step-4" class="wizard-panel" hidden>
+            <div class="next-action-card">
+              <strong>受付完了です。結果メールをお待ちください</strong>
+              <p>分析開始依頼は受け付け済みです。解析完了後、結果をメールで送信します。</p>
+            </div>
+
+            <div class="summary-card">
+              <h4>受付内容</h4>
+              <div class="summary-list">
+                <div class="summary-row"><div class="summary-key">案件名</div><div id="doneCaseTitle" class="summary-value"></div></div>
+                <div class="summary-row"><div class="summary-key">案件ID</div><div id="doneCaseId" class="summary-value"></div></div>
+                <div class="summary-row"><div class="summary-key">分析方法</div><div id="doneMode" class="summary-value"></div></div>
+                <div class="summary-row"><div class="summary-key">通知先メール</div><div id="doneEmail" class="summary-value"></div></div>
+                <div class="summary-row"><div class="summary-key">現在の状態</div><div id="doneStatusText" class="summary-value">分析開始を受け付けました。結果はメールで通知されます。</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="policy">
+      <div class="container">
+        <div class="section-head">
+          <h2>ご利用前に</h2>
+          <p>公開時には、最低限この2項目を明記しておくと安心です。</p>
+        </div>
+        <div class="policy-grid">
+          <article class="policy-card">
+            <h3>利用上の注意</h3>
+            <ul>
+              <li>本サービスの出力は補助的な索引であり、最終的な法的判断・事実認定を代替するものではありません。</li>
+              <li>音声の内容や状況によって、抽出結果には限界があります。</li>
+              <li>重要な場面では、原本音声と人による確認を必ず行ってください。</li>
+            </ul>
+          </article>
+          <article class="policy-card">
+            <h3>プライバシーと取扱い</h3>
+            <ul>
+              <li>音声ファイルや入力情報は、解析と結果提供の目的でのみ取り扱う想定です。</li>
+              <li>保存期間、削除方針、問い合わせ窓口は、公開前に明文化してください。</li>
+              <li>個人情報やセンシティブな情報を含むため、公開時は利用規約とプライバシーポリシーの整備を推奨します。</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="actionBar" class="action-bar show" aria-label="固定操作バー">
+    <div class="action-bar-inner">
+      <div class="action-bar-left">
+        <button id="actionBackButton" class="button-secondary" type="button">戻る</button>
+        <div id="actionStatus" class="action-status">申込内容を入力してください。</div>
+      </div>
+      <div class="action-bar-right">
+        <button id="actionPrimaryButton" class="cta" type="button">専用アップロード先を作成する</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container footer-box">
+      <div>© ALIS</div>
+      <div>ウィザード型サンプル版</div>
+    </div>
+  </footer>
+
+  <script>
+    // ==============================
+    // 実運用時にここだけ差し替える
+    // ==============================
+    // const APPLICATION_WEBHOOK_URL = "https://example.com/make/application-webhook";
+    // const START_ANALYSIS_WEBHOOK_URL = "https://example.com/make/start-analysis-webhook";
+    const APPLICATION_WEBHOOK_URL = "https://hook.us2.make.com/7c0gj3vqee7and2csx7nxwlft87b2z3w";
+    const START_ANALYSIS_WEBHOOK_URL = "https://hook.us2.make.com/ay3nde09oq5zpilowarq8y58k3ap8jf2";
+
+    const USE_DEMO_MODE = false;
+    const DEBUG_ALERT = false;
+
+    const MODE_LABELS = {
+      case_multi_file: "案件モード（複数音声対応）",
+      single_file_quick: "単独ファイル簡易モード（1音声のみ）"
+    };
+
+    const SPLIT_LABELS = {
+      3: "3分（高精度検証用・解析件数大幅増）",
+      5: "5分（詳細確認向け・解析件数増）",
+      10: "10分（やや細かめ）",
+      15: "15分（標準）",
+      20: "20分（長時間向け）"
+    };
+
+    const state = {
+      currentStep: 1,
+      analysisMode: "case_multi_file",
+      caseTitle: "",
+      caseId: "",
+      email: "",
+      gender: "",
+      splitMinutes: 15,
+      specificPhrases: [],
+      selectedTechniques: [],
+      driveUrl: "",
+      folderId: "",
+      resultFolderId: "",
+      resultDriveUrl: "",
+      caseFolderId: "",
+      caseDriveUrl: "",
+      rawLockedFolderId: "",
+      rawLockedDriveUrl: "",
+      applicationSubmitted: false,
+      analysisRequested: false
+    };
+
+    const panels = {
+      1: document.getElementById("panel-step-1"),
+      2: document.getElementById("panel-step-2"),
+      3: document.getElementById("panel-step-3"),
+      4: document.getElementById("panel-step-4")
+    };
+
+    const progressChips = {
+      1: document.getElementById("progress-step-1"),
+      2: document.getElementById("progress-step-2"),
+      3: document.getElementById("progress-step-3"),
+      4: document.getElementById("progress-step-4")
+    };
+
+    const globalMessage = document.getElementById("globalMessage");
+    const applicationForm = document.getElementById("applicationForm");
+    const actionPrimaryButton = document.getElementById("actionPrimaryButton");
+    const applicationSubmitButton = actionPrimaryButton;
+
+    const driveFolderLink = document.getElementById("driveFolderLink");
+    const analysisDriveLink = document.getElementById("analysisDriveLink");
+
+    const summaryCaseTitle = document.getElementById("summaryCaseTitle");
+    const summaryCaseId = document.getElementById("summaryCaseId");
+    const summaryMode = document.getElementById("summaryMode");
+    const summaryEmail = document.getElementById("summaryEmail");
+    const summaryGender = document.getElementById("summaryGender");
+    const summarySplit = document.getElementById("summarySplit");
+    const summaryPhrases = document.getElementById("summaryPhrases");
+    const summaryTechniques = document.getElementById("summaryTechniques");
+
+    const analysisCaseTitle = document.getElementById("analysisCaseTitle");
+    const analysisCaseId = document.getElementById("analysisCaseId");
+    const analysisModeText = document.getElementById("analysisMode");
+    const analysisEmail = document.getElementById("analysisEmail");
+
+    const doneCaseTitle = document.getElementById("doneCaseTitle");
+    const doneCaseId = document.getElementById("doneCaseId");
+    const doneMode = document.getElementById("doneMode");
+    const doneEmail = document.getElementById("doneEmail");
+    const doneStatusText = document.getElementById("doneStatusText");
+
+    const modeUploadHelp = document.getElementById("modeUploadHelp");
+    const modePill = document.getElementById("modePill");
+    const modeWarningPill = document.getElementById("modeWarningPill");
+    const step2GuideList = document.getElementById("step2GuideList");
+    const step3Checklist = document.getElementById("step3Checklist");
+    const uploadDoneCheck = document.getElementById("uploadDoneCheck");
+    const microStepUploadText = document.getElementById("microStepUploadText");
+
+    const actionBackButton = document.getElementById("actionBackButton");
+    const actionStatus = document.getElementById("actionStatus");
+
+    const modeCards = Array.from(document.querySelectorAll(".mode-card"));
+
+    function displayCaseTitle() {
+      return state.caseTitle || "未入力";
+    }
+
+    function getSplitLabel(value) {
+      return SPLIT_LABELS[value] || `${value}分`;
+    }
+
+    function parseSpecificPhrases(rawText) {
+      return Array.from(new Set(
+        String(rawText || "")
+          .split(/[,\n、]+/)
+          .map((s) => s.trim())
+          .filter(Boolean)
+      ));
+    }
+
+    function formatSpecificPhrases(arr) {
+      return Array.isArray(arr) && arr.length ? arr.join("、") : "なし";
+    }
+
+    function showMessage(text, type = "info") {
+      globalMessage.textContent = text;
+      globalMessage.className = `floating-message show ${type}`;
+    }
+
+    function clearMessage() {
+      globalMessage.textContent = "";
+      globalMessage.className = "floating-message info";
+    }
+
+    function getModeLabel(mode) {
+      return MODE_LABELS[mode] || mode || "-";
+    }
+
+    function updateModeCards() {
+      modeCards.forEach((card) => {
+        const mode = card.dataset.mode;
+        const isSelected = mode === state.analysisMode;
+        card.classList.toggle("selected", isSelected);
+        const input = card.querySelector('input[type="radio"]');
+        if (input) input.checked = isSelected;
+      });
+    }
+
+    function updateDriveLinks() {
+      const links = [driveFolderLink, analysisDriveLink];
+
+      links.forEach((link) => {
+        if (!link) return;
+        if (state.driveUrl) {
+          link.href = state.driveUrl;
+          link.classList.remove("empty-link");
+        } else {
+          link.href = "#";
+          link.classList.add("empty-link");
+        }
+      });
+    }
+
+    function syncSummaries() {
+      summaryCaseTitle.textContent = displayCaseTitle();
+      summaryCaseId.textContent = state.caseId || "-";
+      summaryMode.textContent = getModeLabel(state.analysisMode);
+      summaryEmail.textContent = state.email || "-";
+      summaryGender.textContent = state.gender || "-";
+      summarySplit.textContent = getSplitLabel(state.splitMinutes);
+      summaryPhrases.textContent = formatSpecificPhrases(state.specificPhrases);
+      summaryTechniques.textContent = state.selectedTechniques.length ? state.selectedTechniques.join("、") : "未選択";
+
+      analysisCaseTitle.textContent = displayCaseTitle();
+      analysisCaseId.textContent = state.caseId || "-";
+      analysisModeText.textContent = getModeLabel(state.analysisMode);
+      analysisEmail.textContent = state.email || "-";
+
+      doneCaseTitle.textContent = displayCaseTitle();
+      doneCaseId.textContent = state.caseId || "-";
+      doneMode.textContent = getModeLabel(state.analysisMode);
+      doneEmail.textContent = state.email || "-";
+
+      if (state.analysisMode === "case_multi_file") {
+        modeUploadHelp.textContent = "案件モードです。複数の音声ファイルをアップロードできます。アップロード後はこのページへ戻り、完了チェックを入れて次へ進んでください。";
+        modePill.textContent = "案件モード / 複数音声対応";
+        modeWarningPill.textContent = "複数ファイルをアップロード可能";
+        microStepUploadText.textContent = "複数の音声ファイルをアップロードできます。";
+        step2GuideList.innerHTML = `
+          <li>下の青いボタンから Google Drive を開いてください。</li>
+          <li>解析対象の音声ファイルをアップロードしてください。</li>
+          <li>アップロード後にこのページへ戻り、完了チェックを入れて次へ進んでください。</li>
+        `;
+        step3Checklist.innerHTML = `
+          <li>音声ファイルのアップロードが完了していることを確認してください。</li>
+          <li>案件モードでは、rawフォルダ内に複数ファイルがあっても開始できます。</li>
+          <li>結果は案件単位で整理され、メールで通知されます。</li>
+        `;
+      } else {
+        modeUploadHelp.textContent = "単独ファイル簡易モードです。音声ファイルは1件のみアップロードしてください。2件以上ある場合は開始できません。";
+        modePill.textContent = "単独ファイル簡易モード / 1音声のみ";
+        modeWarningPill.textContent = "音声は1件のみ";
+        microStepUploadText.textContent = "音声ファイルを1件だけアップロードしてください。";
+        step2GuideList.innerHTML = `
+          <li>下の青いボタンから Google Drive を開いてください。</li>
+          <li>解析対象の音声ファイルを1件だけアップロードしてください。</li>
+          <li>アップロード後にこのページへ戻り、完了チェックを入れて次へ進んでください。</li>
+        `;
+        step3Checklist.innerHTML = `
+          <li>音声ファイルが1件だけアップロードされていることを確認してください。</li>
+          <li>単独ファイル簡易モードでは、2件以上あると開始できません。</li>
+          <li>結果はメールで通知されます。</li>
+        `;
+      }
+
+      updateDriveLinks();
+      updateActionBar();
+    }
+
+    function renderStep(stepNumber) {
+      state.currentStep = stepNumber;
+
+      Object.entries(panels).forEach(([key, panel]) => {
+        panel.hidden = Number(key) !== stepNumber;
+      });
+
+      Object.entries(progressChips).forEach(([key, chip]) => {
+        const num = Number(key);
+        chip.classList.remove("active", "done");
+
+        if (stepNumber === 4) {
+          if (num <= 4) chip.classList.add("done");
+          return;
+        }
+
+        if (num < stepNumber) chip.classList.add("done");
+        if (num === stepNumber) chip.classList.add("active");
+      });
+
+      syncSummaries();
+      window.scrollTo({
+        top: document.getElementById("apply").offsetTop - 16,
+        behavior: "smooth"
+      });
+    }
+
+    function updateActionBar() {
+      const step = state.currentStep;
+
+      actionBackButton.hidden = step === 1 || step === 4;
+
+      if (step === 1) {
+        actionBackButton.textContent = "戻る";
+        actionStatus.textContent = "申込内容を入力してください。";
+        applicationSubmitButton.textContent = "専用アップロード先を作成する";
+        applicationSubmitButton.disabled = false;
+      }
+
+      if (step === 2) {
+        actionBackButton.textContent = "入力内容を修正する";
+        actionStatus.textContent = state.analysisMode === "case_multi_file"
+          ? "Driveに音声をアップロードし、完了チェック後に次へ進んでください。"
+          : "Driveに音声を1件アップロードし、完了チェック後に次へ進んでください。";
+        applicationSubmitButton.textContent = "アップロード後、次へ進む";
+        applicationSubmitButton.disabled = !uploadDoneCheck.checked;
+      }
+
+      if (step === 3) {
+        actionBackButton.textContent = "アップロード画面へ戻る";
+        actionStatus.textContent = "アップロード済みなら、そのまま分析を開始できます。";
+        applicationSubmitButton.textContent = "分析を開始する";
+        applicationSubmitButton.disabled = false;
+      }
+
+      if (step === 4) {
+        actionStatus.textContent = "分析開始を受け付けました。結果はメールで通知されます。";
+        applicationSubmitButton.textContent = "別件を新しく申し込む";
+        applicationSubmitButton.disabled = false;
+      }
+    }
+
+    function collectSelectedTechniques() {
+      return Array.from(document.querySelectorAll('input[name="technique"]:checked')).map((el) => el.value);
+    }
+
+    function fillStateFromForm() {
+      state.analysisMode = document.querySelector('input[name="analysisMode"]:checked')?.value || "case_multi_file";
+      state.caseTitle = document.getElementById("caseTitle").value.trim();
+      state.email = document.getElementById("clientEmail").value.trim();
+      state.gender = document.getElementById("clientGender").value;
+      state.splitMinutes = Number(document.getElementById("splitMinutes").value);
+      state.specificPhrases = parseSpecificPhrases(document.getElementById("specificPhrases").value);
+      state.selectedTechniques = collectSelectedTechniques();
+    }
+
+    async function createApplication(payload) {
+      if (USE_DEMO_MODE) {
+        await delay(700);
+        const safeName = encodeURIComponent(payload.client_email || "sample@example.com");
+        const stamp = Date.now();
+        return {
+          ok: true,
+          client_email: payload.client_email,
+          case_title: payload.case_title || "",
+          analysis_mode: payload.analysis_mode || "case_multi_file",
+          case_id: `ALIS-DEMO-${stamp}`,
+          drive_url: `https://drive.google.com/drive/folders/demo-raw-${safeName}`,
+          folder_id: `demo-raw-folder-${stamp}`,
+          result_folder_id: `demo-result-folder-${stamp}`,
+          result_drive_url: `https://drive.google.com/drive/folders/demo-result-${safeName}`,
+          case_folder_id: `demo-case-folder-${stamp}`,
+          case_drive_url: `https://drive.google.com/drive/folders/demo-case-${safeName}`,
+          raw_locked_folder_id: `demo-raw-locked-folder-${stamp}`,
+          raw_locked_drive_url: `https://drive.google.com/drive/folders/demo-raw-locked-${safeName}`,
+          message: "専用アップロード先を作成しました。"
+        };
+      }
+
+      const response = await fetch(APPLICATION_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error("申込受付APIの呼び出しに失敗しました。");
+      }
+
+      return response.json();
+    }
+
+    async function startAnalysis(payload) {
+      if (USE_DEMO_MODE) {
+        await delay(700);
+        if (payload.analysis_mode === "single_file_quick") {
+          return {
+            ok: true,
+            status: "accepted",
+            case_id: payload.case_id,
+            case_title: payload.case_title || "",
+            message: "単独ファイル簡易モードで分析開始を受け付けました。結果はメールで通知されます。"
+          };
+        }
+
+        return {
+          ok: true,
+          status: "accepted",
+          case_id: payload.case_id,
+          case_title: payload.case_title || "",
+          message: "案件モードで分析開始を受け付けました。結果はメールで通知されます。"
+        };
+      }
+
+      const response = await fetch(START_ANALYSIS_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error("分析開始APIの呼び出しに失敗しました。");
+      }
+
+      return response.json();
+    }
+
+    function delay(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    async function handleApplicationSubmit() {
+      clearMessage();
+      fillStateFromForm();
+
+      if (!state.email || !state.gender || !state.splitMinutes) {
+        showMessage("メールアドレス、依頼者の性別、分割単位は必須です。", "error");
+        return;
+      }
+
+      applicationSubmitButton.disabled = true;
+      applicationSubmitButton.textContent = "専用アップロード先を作成しています...";
+      actionStatus.textContent = "専用Google Driveフォルダを作成しています。";
+      showMessage("専用Google Driveフォルダを作成しています。", "info");
+
+      try {
+        const payload = {
+          case_title: state.caseTitle,
+          client_email: state.email,
+          client_gender: state.gender,
+          split_minutes: state.splitMinutes,
+          specific_phrases: state.specificPhrases,
+          selected_techniques: state.selectedTechniques,
+          analysis_mode: state.analysisMode
+        };
+
+        const result = await createApplication(payload);
+        console.log("APPLICATION RESULT =", result);
+
+        if (DEBUG_ALERT) {
+          alert(JSON.stringify(result, null, 2));
+        }
+
+        if (
+          !result.ok ||
+          !result.case_id ||
+          !result.drive_url ||
+          !result.folder_id ||
+          !result.result_folder_id ||
+          !result.result_drive_url ||
+          !result.case_folder_id ||
+          !result.case_drive_url ||
+          !result.raw_locked_folder_id
+        ) {
+          throw new Error(result.message || "アップロード先の作成に失敗しました。");
+        }
+
+        state.caseTitle = result.case_title ?? state.caseTitle;
+        state.caseId = result.case_id || "";
+        state.driveUrl = result.drive_url || "";
+        state.folderId = result.folder_id || "";
+        state.resultFolderId = result.result_folder_id || "";
+        state.resultDriveUrl = result.result_drive_url || "";
+        state.caseFolderId = result.case_folder_id || "";
+        state.caseDriveUrl = result.case_drive_url || "";
+        state.rawLockedFolderId = result.raw_locked_folder_id || "";
+        state.rawLockedDriveUrl = result.raw_locked_drive_url || "";
+        state.applicationSubmitted = true;
+
+        uploadDoneCheck.checked = false;
+
+        syncSummaries();
+        renderStep(2);
+        showMessage(result.message || "専用アップロード先を作成しました。", "success");
+      } catch (error) {
+        console.error("APPLICATION ERROR =", error);
+        showMessage(error.message || "アップロード先の作成に失敗しました。", "error");
+      } finally {
+        applicationSubmitButton.disabled = false;
+        updateActionBar();
+      }
+    }
+
+    function goBack() {
+      clearMessage();
+
+      if (state.currentStep === 2) {
+        renderStep(1);
+        return;
+      }
+
+      if (state.currentStep === 3) {
+        renderStep(2);
+        return;
+      }
+    }
+
+    function goForwardFromStep2() {
+      clearMessage();
+
+      if (!uploadDoneCheck.checked) {
+        showMessage("音声アップロード完了後にチェックを入れてから次へ進んでください。", "error");
+        updateActionBar();
+        return;
+      }
+
+      syncSummaries();
+      renderStep(3);
+      showMessage("アップロード済みなら分析開始ボタンを押してください。", "info");
+    }
+
+    async function handleStartAnalysis() {
+      clearMessage();
+
+      if (!state.applicationSubmitted || !state.caseId) {
+        showMessage("先に申込内容を送信してください。", "error");
+        renderStep(1);
+        return;
+      }
+
+      applicationSubmitButton.disabled = true;
+      applicationSubmitButton.textContent = "分析開始を送信しています...";
+      actionStatus.textContent = "rawフォルダの確認と分析開始リクエストを送信しています。";
+      showMessage("rawフォルダの確認と分析開始リクエストを送信しています。", "info");
+
+      try {
+        const payload = {
+          case_id: state.caseId,
+          case_title: state.caseTitle,
+          analysis_mode: state.analysisMode,
+          client_email: state.email,
+          client_gender: state.gender,
+          split_minutes: state.splitMinutes,
+          specific_phrases: state.specificPhrases,
+          selected_techniques: state.selectedTechniques,
+          folder_id: state.folderId,
+          drive_url: state.driveUrl,
+          result_folder_id: state.resultFolderId,
+          result_drive_url: state.resultDriveUrl,
+          case_folder_id: state.caseFolderId,
+          case_drive_url: state.caseDriveUrl,
+          raw_locked_folder_id: state.rawLockedFolderId,
+          raw_locked_drive_url: state.rawLockedDriveUrl
+        };
+
+        console.log("START ANALYSIS PAYLOAD =", payload);
+
+        const result = await startAnalysis(payload);
+        console.log("START ANALYSIS RESULT =", result);
+
+        if (!result.ok) {
+          const errorType = result.error_type || "";
+          if (errorType === "no_audio") {
+            throw new Error(result.message || "rawフォルダ内に有効な音声ファイルがありません。");
+          }
+          if (errorType === "multiple_audio") {
+            throw new Error(result.message || "単独ファイル簡易モードでは音声を1件にしてください。");
+          }
+          throw new Error(result.message || "分析開始に失敗しました。rawフォルダを確認してください。");
+        }
+
+        state.caseTitle = result.case_title ?? state.caseTitle;
+        state.analysisRequested = true;
+        doneStatusText.textContent = result.message || "分析開始を受け付けました。結果はメールで通知されます。";
+        syncSummaries();
+        renderStep(4);
+        showMessage(result.message || "分析開始を受け付けました。", "success");
+      } catch (error) {
+        console.error("START ANALYSIS ERROR =", error);
+        showMessage(error.message || "分析開始に失敗しました。", "error");
+      } finally {
+        applicationSubmitButton.disabled = false;
+        updateActionBar();
+      }
+    }
+
+    function restartFlow() {
+      clearMessage();
+      applicationForm.reset();
+
+      document.querySelectorAll('input[name="technique"]').forEach((checkbox) => {
+        checkbox.checked = false;
+      });
+
+      const defaultModeInput = document.querySelector('input[name="analysisMode"][value="case_multi_file"]');
+      if (defaultModeInput) defaultModeInput.checked = true;
+
+      uploadDoneCheck.checked = false;
+
+      state.currentStep = 1;
+      state.analysisMode = "case_multi_file";
+      state.caseTitle = "";
+      state.caseId = "";
+      state.email = "";
+      state.gender = "";
+      state.splitMinutes = 15;
+      state.specificPhrases = [];
+      state.selectedTechniques = [];
+      state.driveUrl = "";
+      state.folderId = "";
+      state.resultFolderId = "";
+      state.resultDriveUrl = "";
+      state.caseFolderId = "";
+      state.caseDriveUrl = "";
+      state.rawLockedFolderId = "";
+      state.rawLockedDriveUrl = "";
+      state.applicationSubmitted = false;
+      state.analysisRequested = false;
+
+      doneStatusText.textContent = "分析開始を受け付けました。結果はメールで通知されます。";
+
+      updateModeCards();
+      syncSummaries();
+      renderStep(1);
+      showMessage("新しい案件の申込を開始できます。", "info");
+    }
+
+    applicationForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      await handleApplicationSubmit();
+    });
+
+    modeCards.forEach((card) => {
+      card.addEventListener("click", () => {
+        const mode = card.dataset.mode;
+        state.analysisMode = mode;
+        updateModeCards();
+        if (state.currentStep === 2) {
+          uploadDoneCheck.checked = false;
+        }
+        syncSummaries();
+      });
+
+      card.addEventListener("keydown", (event) => {
+        if (event.key === " " || event.key === "Enter") {
+          event.preventDefault();
+          const mode = card.dataset.mode;
+          state.analysisMode = mode;
+          updateModeCards();
+          if (state.currentStep === 2) {
+            uploadDoneCheck.checked = false;
+          }
+          syncSummaries();
+        }
+      });
+    });
+
+    uploadDoneCheck.addEventListener("change", () => {
+      updateActionBar();
+    });
+
+    actionBackButton.addEventListener("click", () => {
+      goBack();
+    });
+
+    actionPrimaryButton.addEventListener("click", async () => {
+      if (state.currentStep === 1) {
+        if (applicationForm.requestSubmit) {
+          applicationForm.requestSubmit();
+        } else {
+          applicationForm.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
+        }
+        return;
+      }
+
+      if (state.currentStep === 2) {
+        goForwardFromStep2();
+        return;
+      }
+
+      if (state.currentStep === 3) {
+        await handleStartAnalysis();
+        return;
+      }
+
+      if (state.currentStep === 4) {
+        restartFlow();
+      }
+    });
+
+    syncSummaries();
+    updateModeCards();
+    renderStep(1);
+  </script>
+</body>
+</html>
