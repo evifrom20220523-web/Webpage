@@ -4,50 +4,39 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ALIS | 音声確認支援サービス</title>
-  <meta name="robots" content="noindex, nofollow" />
-  <meta name="description" content="ALISは、録音データの確認優先区間を整理する法務補助向け音声確認支援サービスです。" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <meta name="robots" content="noindex, nofollow">
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body class="with-bottom-bar">
-
   <header>
     <div class="container nav">
       <a class="brand" href="#top">
         <span class="brand-mark">A</span>
         <span>ALIS</span>
       </a>
-      <nav class="nav-links" id="navLinks">
+      <nav class="nav-links">
         <a href="#features">特徴</a>
-        <a href="#demo">サンプル</a>
         <a href="#flow">流れ</a>
         <a href="#apply">申込</a>
         <a href="#policy">ご利用前に</a>
-        <a class="cta nav-cta" href="#apply">開始する</a>
+        <a class="cta" href="#apply">開始する</a>
       </nav>
-      <button class="hamburger" id="hamburger" aria-label="メニュー" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
     </div>
   </header>
 
   <main id="top">
-
-    <!-- ヒーロー -->
     <section class="hero">
       <div class="container hero-grid">
         <div class="hero-copy">
           <div class="eyebrow">長時間録音の確認負担を下げる、法務補助向けの音声確認支援</div>
-          <h1>ALIS<br>音声確認支援サービス</h1>
+          <h1>ALIS 音声確認支援サービス</h1>
           <p class="lead">
             録音データを区間ごとに整理し、先に確認すべき箇所を見つけやすい索引レポートとしてまとめます。
             原本との対応関係を保ちながら、確認優先区間・区間別の傾向・実行ログを整理し、担当者が再確認しやすい形に整えます。
           </p>
           <div class="hero-actions">
             <a class="cta" href="#apply">申込を開始</a>
-            <a class="btn-outline" href="#demo">サンプルを見る</a>
+            <a class="button-secondary" href="#policy">利用条件を見る</a>
           </div>
           <div class="mini-points">
             <div class="mini-point">
@@ -66,42 +55,25 @@
         </div>
 
         <aside class="hero-card">
-          <h2>このページで完了する流れ</h2>
-          <div class="flow-steps">
-            <div class="flow-step">
-              <div class="flow-num">1</div>
-              <div>
-                <strong>申込内容を入力</strong>
-                <p>案件名、依頼者情報、確認したい観点を入力します。</p>
-              </div>
-            </div>
-            <div class="flow-step">
-              <div class="flow-num">2</div>
-              <div>
-                <strong>専用フォルダへ音声をアップロード</strong>
-                <p>申込後、このページに専用アップロード先が表示されます。</p>
-              </div>
-            </div>
-            <div class="flow-step">
-              <div class="flow-num">3</div>
-              <div>
-                <strong>このページで開始依頼を送信</strong>
-                <p>アップロード後に開始ボタンを押し、結果はメールで受け取ります。</p>
-              </div>
-            </div>
-            <div class="flow-step flow-step--accent">
-              <div class="flow-num flow-num--accent">✦</div>
-              <div>
-                <strong>公開デモを掲載</strong>
-                <p>公開動画をもとにしたサンプル出力を掲載し、レポートの見え方を事前に確認できます。</p>
-              </div>
-            </div>
+          <div>
+            <h2>このページで完了する流れ</h2>
+          </div>
+          <div class="status-box">
+            <strong>1. 申込内容を入力</strong>
+            <p>案件名、依頼者情報、確認したい観点を入力します。</p>
+          </div>
+          <div class="status-box">
+            <strong>2. 専用フォルダへ音声をアップロード</strong>
+            <p>申込後、このページに専用アップロード先が表示されます。</p>
+          </div>
+          <div class="status-box">
+            <strong>3. このページで開始依頼を送信</strong>
+            <p>アップロード後に開始ボタンを押し、結果はメールで受け取ります。</p>
           </div>
         </aside>
       </div>
     </section>
 
-    <!-- 特長 -->
     <section id="features">
       <div class="container">
         <div class="section-head">
@@ -110,23 +82,14 @@
         </div>
         <div class="grid-3">
           <article class="section-card">
-            <div class="card-icon">
-              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
-            </div>
             <h3>先に確認すべき箇所が分かりやすい</h3>
             <p>確認候補を Part 単位で整理し、区間分布やタイムラインとあわせて再生順を決めやすくします。</p>
           </article>
           <article class="section-card">
-            <div class="card-icon">
-              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-            </div>
             <h3>確認履歴を残しやすい</h3>
             <p>RUNLOG や MANIFEST により、いつ・何を・どの設定で処理したかを後から確認できます。</p>
           </article>
           <article class="section-card">
-            <div class="card-icon">
-              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h7"/></svg>
-            </div>
             <h3>案件単位にも単発確認にも対応</h3>
             <p>複数音声をまとめる案件モードと、1音声だけを確認する簡易モードを使い分けられます。</p>
           </article>
@@ -134,139 +97,6 @@
       </div>
     </section>
 
-    <!-- デモ -->
-    <section id="demo" class="demo-section">
-      <div class="container">
-        <div class="section-head">
-          <h2>公開デモサンプル</h2>
-          <p>
-            公開されているYouTube動画をもとに、ALISでどのような索引レポートが出るかの見本です。<br />
-            以下は法的断定ではなく、あくまで<strong>「優先的に再生確認すべき区間の整理」</strong>として出力されたものです。
-          </p>
-        </div>
-
-        <div class="demo-notice">
-          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
-          <span>以下の区間ラベルはALISが出力した索引の抜粋です。法的評価・事実認定は、担当弁護士・裁判所の判断に委ねられます。</span>
-        </div>
-
-        <div class="demo-intro-card">
-          <div>
-            <strong>まず見てほしいポイント</strong>
-            <p>
-              15分未満の動画では、15分分割より3分分割の方が「最初の3分」「次の3分」のように優先再生区間が見えやすく、
-              デモとして理解しやすい結果になりました。
-            </p>
-          </div>
-          <div class="pill-row">
-            <span class="pill">主サンプル: 3分分割</span>
-            <span class="pill warn">補足サンプル: 15分分割</span>
-          </div>
-        </div>
-
-        <div class="demo-grid">
-          <article class="demo-card featured-demo">
-            <div class="demo-card-head">
-              <div>
-                <div class="demo-badge">主サンプル</div>
-                <h3>YouTubeサンプル①（3分分割）</h3>
-              </div>
-              <a class="btn-outline btn-sm" href="https://www.youtube.com/watch?v=AT7PPpCXORA" target="_blank" rel="noopener noreferrer">動画を開く ↗</a>
-            </div>
-
-            <p class="demo-lead">
-              3分ごとの区切りで処理した結果、冒頭から連続して優先確認区間が並び、
-              「最初にどこを聞けばよいか」が非常に伝わりやすいサンプルです。
-            </p>
-
-            <div class="demo-highlight-box">
-              <div class="demo-highlight-label">
-                <span class="ai-badge">ALIS 出力</span>
-                <strong>優先再生を推奨した区間（抜粋）</strong>
-              </div>
-              <ol>
-                <li><strong>00:00–00:03</strong> 質問に対する人格否定と侮辱</li>
-                <li><strong>00:03–00:06</strong> 存在価値の否定を目的とした「無視」の明確な意思表示</li>
-                <li><strong>00:06–00:09</strong> 身体的苦痛の矮小化と比較による精神的支配</li>
-              </ol>
-            </div>
-
-            <div class="demo-columns">
-              <div class="demo-subcard">
-                <h4>レポートの見え方</h4>
-                <ul>
-                  <li>動画をそのまま長く聞き直す前に、優先区間から再生順を決められる</li>
-                  <li>同じ動画の中でも、数分単位で論点を切り分けて確認できる</li>
-                  <li>「冒頭から優先確認」という判断が直感的に理解しやすい</li>
-                </ul>
-              </div>
-              <div class="demo-subcard quote-card">
-                <div class="ai-badge ai-badge--sm">ALIS 総合所見（抜粋）</div>
-                <p>
-                  Sランク評価の区間が連続しているため、まずはファイル冒頭（00:00:00）から優先的に再生・確認することが推奨される、
-                  という形で索引化されます。
-                </p>
-              </div>
-            </div>
-          </article>
-
-          <article class="demo-card">
-            <div class="demo-card-head">
-              <div>
-                <div class="demo-badge demo-badge--subtle">補足サンプル</div>
-                <h3>YouTubeサンプル②（15分分割・案件デモ）</h3>
-              </div>
-              <a class="btn-outline btn-sm" href="https://www.youtube.com/watch?v=H_l_ttyUg1Q" target="_blank" rel="noopener noreferrer">動画を開く ↗</a>
-            </div>
-
-            <p class="demo-lead">
-              複数音声を案件モードでまとめたとき、どのファイルを先に聞くべきかを案件全体で整理する見せ方のサンプルです。
-            </p>
-
-            <div class="demo-subcard" style="margin-bottom:14px;">
-              <div class="ai-badge ai-badge--sm" style="margin-bottom:8px;">ALIS 出力（抜粋）</div>
-              <h4>案件全体の最優先確認ポイントの例</h4>
-              <ul>
-                <li>人格・人間性の否定</li>
-                <li>奉仕の強要と感謝の要求</li>
-                <li>経済力・知性への罵倒と権利の否定</li>
-                <li>存在否定を目的とした「無視」の正当化</li>
-                <li>全面的な責任転嫁と被害者性の誇張</li>
-              </ul>
-            </div>
-
-            <div class="demo-subcard quote-card">
-              <h4>案件モードで伝わること</h4>
-              <p>
-                複数ファイルがある場合でも、ALISは案件横断で「まずこのファイルの冒頭から確認」といった優先順を整理できます。
-                初見の長時間記録をいきなり全て聞き返すより、確認の入口を作りやすくなります。
-              </p>
-            </div>
-          </article>
-        </div>
-
-        <div class="demo-note-grid">
-          <article class="policy-card">
-            <h3>このサンプルで伝えたいこと</h3>
-            <ul>
-              <li>ALISは断定装置ではなく、先に確認すべき区間の索引を作るサービスです。</li>
-              <li>3分分割では、短い動画でも数分単位で再生優先区間を見せやすくなります。</li>
-              <li>案件モードでは、複数ファイルの中でどこから確認するかを案件単位で整理できます。</li>
-            </ul>
-          </article>
-          <article class="policy-card">
-            <h3>掲載上の注意</h3>
-            <ul>
-              <li>元動画の視聴は各リンク先で行ってください。</li>
-              <li>掲載テキストはALISレポートの抜粋・要約であり、全文再配布を目的とするものではありません。</li>
-              <li>法的評価および事実認定は、担当弁護士・裁判所の判断に委ねられます。</li>
-            </ul>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- 流れ -->
     <section id="flow">
       <div class="container">
         <div class="section-head">
@@ -298,7 +128,6 @@
       </div>
     </section>
 
-    <!-- 申込ウィザード -->
     <section id="apply">
       <div class="container">
         <div class="section-head">
@@ -326,9 +155,15 @@
             </div>
           </div>
 
-          <div id="globalMessage" class="floating-message info" role="alert" aria-live="polite"></div>
+          <div class="wizard-note">
+            実運用時は、JavaScript 側の
+            <span class="inline-code">APPLICATION_WEBHOOK_URL</span> と
+            <span class="inline-code">START_ANALYSIS_WEBHOOK_URL</span>
+            を Make の Custom Webhook URL に差し替えてください。
+          </div>
 
-          <!-- Step 1 -->
+          <div id="globalMessage" class="floating-message info" aria-live="polite"></div>
+
           <div id="panel-step-1" class="wizard-panel">
             <div class="next-action-card">
               <strong>いまやること：申込内容を入力してください</strong>
@@ -340,33 +175,31 @@
               <p>
                 本サービスでは音声ファイルの受け渡しに Google Drive を使用します。<br />
                 ご利用には、Google Drive の共有を受け取れる Google アカウントが必要です。<br />
-                <strong>Gmail アドレスである必要はありません。</strong>
+                <span class="note-emphasis">Gmail アドレスである必要はありません。</span>
               </p>
             </div>
 
-            <h3 class="panel-title">申込内容を入力する</h3>
-            <p class="panel-desc">必須項目を入力し、専用アップロード先を作成してください。</p>
+            <h3>申込内容を入力する</h3>
+            <p>必須項目を入力し、専用アップロード先を作成してください。</p>
 
-            <form id="applicationForm" novalidate>
+            <form id="applicationForm">
               <div class="form-grid">
-
                 <div class="form-field full">
                   <label for="caseTitle">案件名</label>
-                  <input type="text" id="caseTitle" name="caseTitle" maxlength="100"
-                    placeholder="例：3月上旬の電話録音、面会交流の協議、退去要求に関する会話" />
+                  <input type="text" id="caseTitle" name="caseTitle" maxlength="100" placeholder="例：3月上旬の電話録音、面会交流の協議、退去要求に関する会話" />
                   <div class="field-help">あとで識別しやすい名前を入力してください。未入力でも進められます。</div>
                 </div>
 
                 <div class="form-field full">
-                  <label>分析方法 <span class="required-mark">必須</span></label>
+                  <label>分析方法</label>
                   <div class="mode-grid" id="analysisModeGrid">
-                    <label class="mode-card selected" data-mode="case_multi_file" tabindex="0" role="radio" aria-checked="true">
+                    <label class="mode-card selected" data-mode="case_multi_file" tabindex="0">
                       <input type="radio" name="analysisMode" value="case_multi_file" checked />
                       <strong>案件モード（推奨）</strong>
                       <p>1案件内で複数の音声ファイルをまとめて処理します。音声ごとの結果に加え、案件全体で先に確認すべき箇所を整理します。</p>
                       <span class="mode-badge">複数音声対応</span>
                     </label>
-                    <label class="mode-card" data-mode="single_file_quick" tabindex="0" role="radio" aria-checked="false">
+                    <label class="mode-card" data-mode="single_file_quick" tabindex="0">
                       <input type="radio" name="analysisMode" value="single_file_quick" />
                       <strong>単独ファイル簡易モード</strong>
                       <p>1つの音声ファイルのみを対象に簡易的に処理します。まず試したい場合や単発確認に向いています。</p>
@@ -377,33 +210,36 @@
                 </div>
 
                 <div class="form-field">
-                  <label for="clientEmail">メールアドレス <span class="required-mark">必須</span></label>
-                  <input type="email" id="clientEmail" name="clientEmail"
-                    placeholder="example@example.com" required autocomplete="email" />
-                  <div class="field-error" id="emailError" role="alert"></div>
+                  <label for="clientEmail">メールアドレス</label>
+                  <input type="email" id="clientEmail" name="clientEmail" placeholder="example@example.com" required />
                 </div>
 
                 <div class="form-field">
-                  <label for="inviteCode">招待コード <span class="required-mark">必須</span></label>
-                  <input type="password" id="inviteCode" name="inviteCode"
-                    placeholder="ご案内されたコードを入力" required autocomplete="off" />
-                  <div class="field-help">ご案内を受けた方のみご利用いただけます。</div>
-                  <div class="field-error" id="inviteError" role="alert"></div>
+                   <label for="inviteCode">招待コード</label>
+                    <input
+                      type="password"
+                      id="inviteCode"
+                      name="inviteCode"
+                      placeholder="ご案内されたコードを入力"
+                      required
+                    />
+                    <div class="field-help">
+                      ご案内を受けた方のみご利用いただけます。
+                    </div>
                 </div>
 
                 <div class="form-field">
-                  <label for="clientGender">依頼者の性別 <span class="required-mark">必須</span></label>
+                  <label for="clientGender">依頼者の性別</label>
                   <select id="clientGender" name="clientGender" required>
                     <option value="">選択してください</option>
                     <option value="男性">男性</option>
                     <option value="女性">女性</option>
                   </select>
-                  <div class="field-error" id="genderError" role="alert"></div>
                 </div>
 
                 <div class="form-field">
                   <label for="splitMinutes">分割単位</label>
-                  <select id="splitMinutes" name="splitMinutes">
+                  <select id="splitMinutes" name="splitMinutes" required>
                     <option value="15" selected>15分（標準）</option>
                     <option value="10">10分（やや細かめ）</option>
                     <option value="20">20分（長時間向け）</option>
@@ -414,17 +250,16 @@
 
                 <div class="form-field full">
                   <label for="specificPhrases">注視ワード・フレーズ</label>
-                  <textarea id="specificPhrases" name="specificPhrases"
-                    placeholder="例：&#10;無能&#10;出ていけ&#10;家族じゃない"></textarea>
-                  <div class="field-help">カンマ（,）、読点（、）、改行で複数入力できます。</div>
+                  <textarea id="specificPhrases" name="specificPhrases" placeholder="例：&#10;無能&#10;出ていけ&#10;家族じゃない"></textarea>
+                  <div class="field-help">カンマ（,）、読点（、）、改行で複数入力できます。入力内容は配列にして送信されます。</div>
                 </div>
 
                 <div class="form-field full">
                   <label>注視したい技法</label>
                   <div class="checkbox-grid" id="techniqueGrid">
-                    <label class="checkbox-item"><input type="checkbox" name="technique" value="ガスライティング（記憶のねじ曲げ、『言ってない』と否定）"><span>ガスライティング（記憶のねじ曲げ、「言ってない」と否定）</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="technique" value="ガスライティング（記憶のねじ曲げ、「言ってない」と否定）"><span>ガスライティング（記憶のねじ曲げ、「言ってない」と否定）</span></label>
                     <label class="checkbox-item"><input type="checkbox" name="technique" value="ダブルバインド（矛盾した命令、どう動いても責める）"><span>ダブルバインド（矛盾した命令、どう動いても責める）</span></label>
-                    <label class="checkbox-item"><input type="checkbox" name="technique" value="レッテル張り・人格否定（『ゴミ』『無能』等の人格否定、嘲笑）"><span>レッテル張り・人格否定（「ゴミ」「無能」等の人格否定、嘲笑）</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="technique" value="レッテル張り・人格否定（『ゴミ』『無能』等の人格否定、嘲笑）"><span>レッテル張り・人格否定（『ゴミ』『無能』等の人格否定、嘲笑）</span></label>
                     <label class="checkbox-item"><input type="checkbox" name="technique" value="ゆすり・脅迫（関係ない事柄を盾に無理な要求をする）"><span>ゆすり・脅迫（関係ない事柄を盾に無理な要求をする）</span></label>
                     <label class="checkbox-item"><input type="checkbox" name="technique" value="人間関係への攻撃（親族・友人への侮辱、孤立化・監視）"><span>人間関係への攻撃（親族・友人への侮辱、孤立化・監視）</span></label>
                     <label class="checkbox-item"><input type="checkbox" name="technique" value="物理的な威嚇・破壊（物音、物を投げる）"><span>物理的な威嚇・破壊（物音、物を投げる）</span></label>
@@ -435,53 +270,51 @@
                     <label class="checkbox-item"><input type="checkbox" name="technique" value="子供への攻撃（暴言、暴力、恐怖心を与える行為）"><span>子供への攻撃（暴言、暴力、恐怖心を与える行為）</span></label>
                   </div>
                 </div>
-
               </div>
             </form>
           </div>
 
-          <!-- Step 2 -->
           <div id="panel-step-2" class="wizard-panel" hidden>
             <div class="next-action-card">
               <strong>いまやること：専用フォルダに音声ファイルをアップロードしてください</strong>
               <p>まずアップロード先を開き、音声ファイルを入れてください。アップロード後にこのページへ戻り、完了チェックを入れると次へ進めます。</p>
             </div>
 
-            <div class="micro-steps">
-              <div class="micro-step-card">
-                <div class="micro-step-number">1</div>
-                <strong>Driveを開く</strong>
-                <p>下のボタンから専用アップロード先を新しいタブで開きます。</p>
-              </div>
-              <div class="micro-step-card">
-                <div class="micro-step-number">2</div>
-                <strong>音声をアップロード</strong>
-                <p id="microStepUploadText">確認したい音声ファイルをアップロードします。</p>
-              </div>
-              <div class="micro-step-card">
-                <div class="micro-step-number">3</div>
-                <strong>この画面に戻る</strong>
-                <p>アップロード完了後にチェックを入れ、次へ進みます。</p>
+            <div class="priority-box">
+              <strong>このStepでは、次の3つだけ行ってください</strong>
+              <div class="micro-steps">
+                <div class="micro-step-card">
+                  <div class="micro-step-number">1</div>
+                  <strong>Driveを開く</strong>
+                  <p>下のボタンから専用アップロード先を新しいタブで開きます。</p>
+                </div>
+                <div class="micro-step-card">
+                  <div class="micro-step-number">2</div>
+                  <strong>音声をアップロード</strong>
+                  <p id="microStepUploadText">確認したい音声ファイルをアップロードします。</p>
+                </div>
+                <div class="micro-step-card">
+                  <div class="micro-step-number">3</div>
+                  <strong>この画面に戻る</strong>
+                  <p>アップロード完了後にチェックを入れ、次へ進みます。</p>
+                </div>
               </div>
             </div>
 
             <div class="drive-box">
               <strong>専用アップロード先</strong>
-              <a id="driveFolderLink" class="big-drive-button empty-link" href="#" target="_blank" rel="noopener noreferrer">
-                <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M3 15l5-5 4 4 5-6 4 4" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 9l5 5" stroke-linecap="round"/></svg>
-                専用アップロード先を開く
-              </a>
+              <a id="driveFolderLink" class="big-drive-button empty-link" href="#" target="_blank" rel="noopener noreferrer">専用アップロード先を開く</a>
               <div id="modeUploadHelp" class="help-text"></div>
             </div>
 
-            <div class="confirm-box">
+            <div class="confirm-box" style="margin-top:0;">
               <div class="confirm-inline">
                 <input type="checkbox" id="uploadDoneCheck" />
                 <label for="uploadDoneCheck">音声アップロードが完了したらチェックしてください。チェックすると次へ進めます。</label>
               </div>
             </div>
 
-            <div class="panel-meta">
+            <div class="panel-meta" style="margin-top:18px;">
               <div class="summary-card">
                 <h4>今回の申込内容</h4>
                 <div class="summary-list compact-summary">
@@ -504,7 +337,7 @@
 
             <div class="details-card">
               <details>
-                <summary>詳細設定を確認する</summary>
+                <summary>詳細設定を表示する</summary>
                 <div class="details-content">
                   <div class="summary-list">
                     <div class="summary-row"><div class="summary-key">依頼者の性別</div><div id="summaryGender" class="summary-value"></div></div>
@@ -517,7 +350,6 @@
             </div>
           </div>
 
-          <!-- Step 3 -->
           <div id="panel-step-3" class="wizard-panel" hidden>
             <div class="next-action-card">
               <strong>いまやること：アップロード済みなら開始依頼を送信してください</strong>
@@ -526,7 +358,7 @@
 
             <div class="priority-box">
               <strong>開始前の最終確認</strong>
-              <ul id="step3Checklist" style="margin:0;padding-left:20px;color:var(--muted);font-size:14px;"></ul>
+              <ul id="step3Checklist" style="margin:0;padding-left:20px;color:var(--muted);"></ul>
             </div>
 
             <div class="panel-meta">
@@ -537,7 +369,7 @@
                   <div class="summary-row"><div class="summary-key">案件ID</div><div id="analysisCaseId" class="summary-value"></div></div>
                   <div class="summary-row"><div class="summary-key">分析方法</div><div id="analysisMode" class="summary-value"></div></div>
                   <div class="summary-row"><div class="summary-key">メールアドレス</div><div id="analysisEmail" class="summary-value"></div></div>
-                  <div class="summary-row"><div class="summary-key">アップロード先</div><div class="summary-value"><a id="analysisDriveLink" href="#" target="_blank" rel="noopener noreferrer" class="tiny-link empty-link">専用アップロード先を開く</a></div></div>
+                  <div class="summary-row"><div class="summary-key">アップロード先の再確認</div><div class="summary-value"><a id="analysisDriveLink" href="#" target="_blank" rel="noopener noreferrer" class="tiny-link empty-link">専用アップロード先を開く</a></div></div>
                 </div>
               </div>
 
@@ -552,9 +384,8 @@
             </div>
           </div>
 
-          <!-- Step 4 -->
           <div id="panel-step-4" class="wizard-panel" hidden>
-            <div class="next-action-card next-action-card--success">
+            <div class="next-action-card">
               <strong>受付完了です。結果メールをお待ちください</strong>
               <p>開始依頼は受け付け済みです。処理完了後、結果をメールで送信します。</p>
             </div>
@@ -570,17 +401,15 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>
 
-    <!-- ご利用前に -->
     <section id="policy">
       <div class="container">
         <div class="section-head">
           <h2>ご利用前に</h2>
-          <p>サービスご利用にあたって、以下をご確認ください。</p>
+          <p>公開時には、最低限この2項目を明記しておくと安心です。</p>
         </div>
         <div class="policy-grid">
           <article class="policy-card">
@@ -594,22 +423,20 @@
           <article class="policy-card">
             <h3>プライバシーと取扱い</h3>
             <ul>
-              <li>音声ファイルや入力情報は、確認支援と結果提供の目的でのみ取り扱います。</li>
-              <li>アップロードされたファイルは、処理完了後に削除します。</li>
-              <li>個人情報やセンシティブな情報を含む音声の取扱いにご同意のうえ、ご利用ください。</li>
+              <li>音声ファイルや入力情報は、確認支援と結果提供の目的でのみ取り扱う想定です。</li>
+              <li>保存期間、削除方針、問い合わせ窓口は、公開前に明文化してください。</li>
+              <li>個人情報やセンシティブな情報を含むため、公開時は利用規約とプライバシーポリシーの整備を推奨します。</li>
             </ul>
           </article>
         </div>
       </div>
     </section>
-
   </main>
 
-  <!-- 固定ボトムバー -->
-  <div id="actionBar" class="action-bar show" aria-label="操作バー">
+  <div id="actionBar" class="action-bar show" aria-label="固定操作バー">
     <div class="action-bar-inner">
       <div class="action-bar-left">
-        <button id="actionBackButton" class="btn-outline" type="button" hidden>戻る</button>
+        <button id="actionBackButton" class="button-secondary" type="button">戻る</button>
         <div id="actionStatus" class="action-status">申込内容を入力してください。</div>
       </div>
       <div class="action-bar-right">
